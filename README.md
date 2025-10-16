@@ -1,31 +1,32 @@
-# Planets Quiz - Countdown Challenge
+# Planets Quiz
 
-This project presents an interactive web-based quiz about planets in our solar system, enhanced with a 1-minute countdown timer. The quiz challenges users to answer a series of multiple-choice questions within the given time limit. When the timer reaches zero, or when the user manually submits, the answers are automatically processed, and the results are displayed.
+This is a simple, static web page that presents a 5-question quiz about planets. Users select an option for each question and, upon submission, receive a score and feedback. The page is designed with a modern, professional aesthetic and is fully responsive.
+
+## Project Description
+
+The Planets Quiz is a self-contained HTML file featuring embedded CSS for styling and JavaScript for quiz logic. It's built to be a single-page application without any external dependencies, making it easy to deploy and use. Each question presents four options, and after completing all questions, the user's score and a brief performance message are displayed. Visual feedback (green for correct, red for incorrect) is provided directly on the quiz options after submission.
 
 ## Features
 
-*   **Interactive Quiz:** Multiple-choice questions about planets.
-*   **1-Minute Countdown Timer:** A prominent timer displays the remaining time, automatically submitting the quiz when it reaches zero.
-*   **Automatic Submission:** Answers are submitted and results are shown instantly when the timer expires.
-*   **Score Calculation:** Provides a clear score upon submission, indicating how many questions were answered correctly.
-*   **Responsive Design:** Optimized for various screen sizes, from mobile devices to desktops, ensuring a consistent and pleasant user experience.
-*   **Modern UI/UX:** Clean, dark-themed interface with smooth transitions and professional typography.
-*   **Semantic HTML5:** Structured with meaningful HTML tags for better accessibility and SEO.
-*   **Self-Contained:** A single HTML file containing all HTML, CSS, and JavaScript.
+*   **5 Quiz Questions:** A set of questions about planets.
+*   **Multiple Choice:** Each question has 4 options.
+*   **Instant Results:** Score and feedback displayed immediately after submission.
+*   **Visual Feedback:** Correct and incorrect answers are highlighted after the quiz is submitted.
+*   **Responsive Design:** Optimized for display on various screen sizes, from mobile phones to desktop monitors.
+*   **Modern UI/UX:** Clean, professional look with a user-friendly interface.
+*   **Semantic HTML5:** Structured with appropriate HTML5 elements for accessibility and SEO.
+*   **Self-contained:** Everything (HTML, CSS, JavaScript) is in a single file.
+*   **No External Dependencies:** No CDN links or external libraries are used.
 
 ## How to Use
 
-1.  **Save the file:** Save the entire code block as an HTML file (e.g., `quiz.html`).
-2.  **Open in Browser:** Open the `quiz.html` file with any modern web browser (Chrome, Firefox, Safari, Edge).
-3.  **Start the Quiz:** The quiz will load, and the 1-minute countdown timer will begin immediately.
-4.  **Answer Questions:** Select your answers for each question.
-5.  **Submit:**
-    *   Click the "Submit Answers" button before the timer runs out.
-    *   If you don't submit, the quiz will automatically submit your selected answers when the timer reaches zero.
-6.  **View Results:** Your score will be displayed at the bottom of the page.
+1.  **Save the file:** Save the entire code block provided as an `.html` file (e.g., `planets_quiz.html`).
+2.  **Open in browser:** Double-click the saved `.html` file, or open it with any modern web browser.
+3.  **Take the quiz:** Answer the questions by selecting your preferred options.
+4.  **Get results:** Click the "Show Results" button to see your score and receive feedback. The correct and incorrect answers will also be highlighted directly on the quiz form.
 
 ## Technologies Used
 
-*   **HTML5:** For the basic structure and semantic content of the web page.
-*   **CSS3:** For styling, including responsive design, layout (Flexbox), and visual enhancements.
-*   **JavaScript (ES6+):** For the quiz logic, dynamic content generation, countdown timer functionality (`setInterval`, `clearInterval`), and handling user interactions.
+*   **HTML5:** For the page structure and content.
+*   **CSS3:** For styling, layout, responsiveness, and visual design.
+*   **JavaScript (ES6+):** For quiz logic, handling user interactions, calculating scores, and dynamically displaying results and feedback.
