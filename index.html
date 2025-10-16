@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planets Quiz - Countdown Challenge</title>
+    <style>
+        /* Modern CSS Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-bg: #1a1a2e;
+            --secondary-bg: #16213e;
+            --accent-color: #e94560;
+            --text-color: #e0e0e0;
+            --light-text-color: #b0b0b0;
+            --border-color: #0f3460;
+            --button-hover-bg: #c93551;
+            --input-focus-border: #8d2e40;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--primary-bg);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Changed to flex-start for better content flow */
+            min-height: 100vh;
+            padding: 20px;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            padding: 25px;
+            max-width: 800px;
+            width: 100%;
+            margin: auto; /* Center the container */
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 5px var(--shadow-color);
+        }
+
+        #timer {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-align: center;
+            padding: 10px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--primary-bg);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+
+        .quiz-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .question-block {
+            background-color: var(--primary-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .question-block:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 15px;
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .option-label:hover {
+            background-color: #1f3055;
+            border-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .option-label input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--light-text-color);
+            border-radius: 50%;
+            margin-right: 15px;
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .option-label input[type="radio"]:checked {
+            border-color: var(--accent-color);
+            background-color: var(--accent-color);
+        }
+
+        .option-label input[type="radio"]:checked::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-bg);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .option-label span {
+            font-size: 1.1em;
+            color: var(--text-color);
+            flex-grow: 1;
+        }
+
+        .submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            align-self: center; /* Center the button */
+        }
+
+        .submit-btn:hover {
+            background-color: var(--button-hover-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.4);
+        }
+
+        .submit-btn:disabled {
+            background-color: #554a4f;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        #results {
+            margin-top: 20px;
+            padding: 25px;
+            background-color: var(--primary-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--accent-color);
+            box-shadow: 0 8px 25px var(--shadow-color);
+            display: none; /* Hidden by default */
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); display: block; }
+        }
+
+        #results.show {
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+
+            #timer {
+                font-size: 1.5em;
+                padding: 8px 10px;
+                margin-bottom: 15px;
+            }
+
+            .question-text {
+                font-size: 1.1em;
+                margin-bottom: 10px;
+            }
+
+            .option-label {
+                padding: 10px 12px;
+            }
+
+            .option-label input[type="radio"] {
+                width: 18px;
+                height: 18px;
+                margin-right: 10px;
+            }
+
+            .option-label span {
+                font-size: 1em;
+            }
+
+            .submit-btn {
+                padding: 12px 25px;
+                font-size: 1.1em;
+            }
+
+            #results {
+                font-size: 1.2em;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Planets Quiz Challenge</h1>
+        <div id="timer">Time: 60s</div>
+
+        <div id="quiz" class="quiz-section">
+            <!-- Quiz questions will be dynamically loaded here -->
+        </div>
+
+        <button id="submit-btn" class="submit-btn">Submit Answers</button>
+
+        <div id="results">
+            <!-- Quiz results will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Earth", "Mars", "Jupiter", "Venus"],
+                answer: "Mars"
+            },
+            {
+                question: "What is the largest planet in our solar system?",
+                options: ["Earth", "Mars", "Jupiter", "Saturn"],
+                answer: "Jupiter"
+            },
+            {
+                question: "Which planet is famous for its prominent rings?",
+                options: ["Mars", "Jupiter", "Uranus", "Saturn"],
+                answer: "Saturn"
+            },
+            {
+                question: "Which planet is closest to the Sun?",
+                options: ["Venus", "Earth", "Mercury", "Mars"],
+                answer: "Mercury"
+            },
+            {
+                question: "Which planet is known as Earth's 'sister planet'?",
+                options: ["Mars", "Venus", "Jupiter", "Uranus"],
+                answer: "Venus"
+            },
+            {
+                question: "What is the coldest planet in our solar system?",
+                options: ["Neptune", "Uranus", "Saturn", "Jupiter"],
+                answer: "Uranus"
+            },
+            {
+                question: "Which gas makes up most of Jupiter's atmosphere?",
+                options: ["Oxygen", "Nitrogen", "Hydrogen", "Helium"],
+                answer: "Hydrogen"
+            },
+            {
+                question: "How many major moons does Mars have?",
+                options: ["One", "Two", "Three", "Four"],
+                answer: "Two"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+        const submitButton = document.getElementById('submit-btn');
+        const resultsContainer = document.getElementById('results');
+        const timerDisplay = document.getElementById('timer');
+
+        let timeLeft = 60; // 1 minute countdown
+        let timerInterval;
+        let quizSubmitted = false;
+
+        function buildQuiz() {
+            quizData.forEach((questionData, index) => {
+                const questionBlock = document.createElement('div');
+                questionBlock.classList.add('question-block');
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('question-text');
+                questionText.textContent = `${index + 1}. ${questionData.question}`;
+                questionBlock.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('options');
+
+                questionData.options.forEach(option => {
+                    const label = document.createElement('label');
+                    label.classList.add('option-label');
+
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `question${index}`;
+                    input.value = option;
+                    
+                    const span = document.createElement('span');
+                    span.textContent = option;
+
+                    label.appendChild(input);
+                    label.appendChild(span);
+                    optionsDiv.appendChild(label);
+                });
+                questionBlock.appendChild(optionsDiv);
+                quizContainer.appendChild(questionBlock);
+            });
+        }
+
+        function startTimer() {
+            timerDisplay.textContent = `Time: ${timeLeft}s`;
+            timerInterval = setInterval(() => {
+                if (quizSubmitted) {
+                    clearInterval(timerInterval);
+                    return;
+                }
+                timeLeft--;
+                timerDisplay.textContent = `Time: ${timeLeft}s`;
+
+                if (timeLeft <= 10) { // Highlight timer when low
+                    timerDisplay.style.color = 'orange';
+                    if (timeLeft <= 5) {
+                        timerDisplay.style.color = 'red';
+                    }
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz(true); // Auto-submit
+                }
+            }, 1000);
+        }
+
+        function submitQuiz(isAutoSubmit = false) {
+            if (quizSubmitted) return; // Prevent multiple submissions
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the timer
+
+            let score = 0;
+            quizData.forEach((questionData, index) => {
+                const selector = `input[name="question${index}"]:checked`;
+                const userAnswerInput = quizContainer.querySelector(selector);
+                
+                if (userAnswerInput && userAnswerInput.value === questionData.answer) {
+                    score++;
+                }
+            });
+
+            resultsContainer.innerHTML = `You scored ${score} out of ${quizData.length} questions!`;
+            resultsContainer.classList.add('show'); // Make results visible with animation
+            
+            submitButton.disabled = true; // Disable submit button after submission
+            submitButton.textContent = "Quiz Completed!";
+
+            // Disable all radio buttons after submission
+            const allRadios = quizContainer.querySelectorAll('input[type="radio"]');
+            allRadios.forEach(radio => radio.disabled = true);
+
+            if (isAutoSubmit) {
+                timerDisplay.textContent = "Time's Up! Answers Submitted!";
+                timerDisplay.style.color = 'red';
+            } else {
+                 timerDisplay.textContent = `Time: ${timeLeft}s - Submitted!`;
+                 timerDisplay.style.color = 'var(--accent-color)'; // Reset color if manually submitted
+            }
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); // Scroll to results
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            buildQuiz();
+            startTimer();
+            submitButton.addEventListener('click', () => submitQuiz(false));
+        });
+    </script>
+</body>
+</html>
